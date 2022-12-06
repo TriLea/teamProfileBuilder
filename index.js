@@ -1,6 +1,15 @@
 const inquirer = require('inquirer');
 var fs = require('fs');
 
+const Choices = [
+    {
+        name: "choices",
+        type: "list",
+        message: "What would you like to add next:",
+        choices: ['Manager', 'Engineer', 'Intern','Quit to Quit.'],
+    },
+]
+
 const Manager = [
     {
         type: 'input',
@@ -80,32 +89,43 @@ var main = fs.readFileSync('./src/template.html', 'ascii');
 var EmployeeHtml = fs.readFileSync('./src/Employee.txt', 'ascii');
 
 var employeeList = '';
-// employeeList += buildEmployee('bill', 'idk', 'yep', 'schoool', 'coolschooool');
-// employeeList += buildEmployee('bill2', 'idk', 'yep', 'github', 'willcodeforfood');
+var inp;
+
+async function ask()
+{
+    answers = await inquirer.prompt(Choices);
+    return answers;
+}
 
 while(true)
 {
-    print('would you like to add another employee? if yes, type which type and hit enter/n'
-    +'Manager, Engineer, Intern');
-    var inp = input();
+    
+    inp = ask().choices;
+    console.log(inp);
 
-    if () //manager
-    {
-        inquirer.prompt(questions).then((answers) => {});
-    }
-    else if () // engineer
-    {
-        inquirer.prompt(questions).then((answers) => {});
-    }
-    else //intern
-    {
-        inquirer.prompt(questions).then((answers) => {});
-    }
-
+    // if (inp == 'Manager') //manager
+    // {
+    //     inquirer.prompt(Manager).then((answers) => {});
+    // }
+    // else if (inp = 'Engineer') // engineer
+    // {
+    //     inquirer.prompt(Engineer).then((answers) => {});
+    // }
+    // else if (inp = 'Intern') //intern
+    // {
+    //     inquirer.prompt(Intern).then((answers) => {});
+    // }
+    // else if (inp = 'Quit')
+    // {
+    //     break;
+    // }
+    // else 
+    // {
+    //     console.log('Please try again');
+    // }
 }
 
 console.log(EmployeeHtml);
 main = main.replace('#teamList', employeeList);
 
 fs.writeFileSync('./dist/temporary.html', main);
-
