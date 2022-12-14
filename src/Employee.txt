@@ -1,16 +1,20 @@
-<div class="employee">
-        <div class="row">
-            <div class="column">
-                <div class="card">
-                    <div class="container">
-                        <h2 class="Name">Name: #Name</h2>
-                        <p>ID: #ID</p>
-                        <p>Email: <a href="mailto:#Email">#Email</a></p>
-                        <p>Position: #FieldName</p>
-                        <p>#FieldName: #FieldContent</p>
+module.exports = employee =>
+{
+    return `
+    <div class="employee">
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                        <div class="container">
+                            <h2 class="Name">Name: #Name</h2>
+                            <p>ID: #ID</p>
+                            <p>Email: <a href="mailto:#Email">#Email</a></p>
+                            <p>Position: #FieldName</p>
+                            <p>#FieldName: #FieldContent</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>`;
+}
