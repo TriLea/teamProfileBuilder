@@ -5,166 +5,157 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-const teamArray = [];
+const template = require("./src/template"); // template.js imports generateHTML function
 
-// const Choices = 
-// [
-//     {
-//         name: "choices",
-//         type: "list",
-//         message: "What would you like to add next:",
-//         choices: ['Manager', 'Engineer', 'Intern','Quit to Quit.'],
-//     },
-// ]
+const teamArray = []; // to store team, gets passed to buildteam() which renders html
 
-function employeeMenu()
+function createManager()
 {
-    function createManager()
+    inquirer.prompt(
+    
+        [
+            {
+                type: 'input',
+                message: 'What is your name?',
+                name: 'managerName'
+            },
+            {
+                type: 'input',
+                message: 'What is your ID?',
+                name: 'ID'
+            },
+            {
+                type: 'input',
+                message: 'What is your Email?',
+                name: 'Email'
+            },
+            {
+                type: 'input',
+                message: 'What is your Office number?',
+                name: 'officeNumber'
+            },
+        ]
+    )
+    .then((answers) => {
+        const managerObj = new Manager(
+        
+        answers.managerName, answers.id, answers.email, answers.officerNumber)
+
+        teamArray.push(managerObj);
+        createTeam();
+    })
+    createManager();
+
+    function createTeam()
     {
         inquirer.prompt(
-        
             [
                 {
-                    type: 'input',
-                    message: 'What is your name?',
-                    name: 'managerName'
-                },
-                {
-                    type: 'input',
-                    message: 'What is your ID?',
-                    name: 'ID'
-                },
-                {
-                    type: 'input',
-                    message: 'What is your Email?',
-                    name: 'Email'
-                },
-                {
-                    type: 'input',
-                    message: 'What is your Office number?',
-                    name: 'officeNumber'
+                    name: "choices",
+                    type: "list",
+                    message: "What would you like to add next:",
+                    choices: ['Engineer', 'Intern','Build to build team.'],
                 },
             ]
         )
-        .then((answers)=>{
-            const managerObj = new Manager(
+        .then((choice)=>{
+
+            switch(choice.choices)
+            {
+                case "Engineer":
+                    addEngineer();
+
+                break;
+
+                case "Intern":
+                    addIntern();
+
+                default:
             
-            answers.managerName, answers.id, answers.email, answers.officerNumber)
-
-            teamArray.push(managerObj);
-            createTeam();
+                    buildTeam();
+                
+            }
         })
-
-        function createTeam()
-        {
-            inquirer.prompt(
-                [
-                    {
-                        name: "choices",
-                        type: "list",
-                        message: "What would you like to add next:",
-                        choices: ['Engineer', 'Intern','Build to build team.'],
-                    },
-                ]
-            )
-            .then((choice)=>{
-
-                switch(choice.choices)
-                {
-                    case "Engineer":
-                        addEngineer();
-
-                    break;
-
-                    case "Intern":
-                        addIntern();
-
-                    default:
-
-                        buildTeam();
-                    
-                }
-            })
-        }
-        //creaete engineer function
-        //creaete Intern function
     }
 }
 
-// const ManagerQuestions = [
-//     {
-//         type: 'input',
-//         message: 'What is your name?',
-//         name: 'name'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your ID?',
-//         name: 'ID'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your Email?',
-//         name: 'name'
-//     },
-// ]
+function addEngineer()
+{
+    inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: 'What is your name?',
+                name: 'name'
+            },
+            {
+                type: 'input',
+                message: 'What is your ID?',
+                name: 'ID'
+            },
+            {
+                type: 'input',
+                message: 'What is your Email?',
+                name: 'name'
+            },
+            {
+                type: 'input',
+                message: 'What is your Github?',
+                name: 'github'
+            },
+        ]
+    )
+    .then((answers) => {
+        const engineerObj = new Engineer(
+        
+        answers.name, answers.id, answers.email, answers.github)
 
-// Engineer = [
-//     {
-//         type: 'input',
-//         message: 'What is your name?',
-//         name: 'name'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your ID?',
-//         name: 'ID'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your Email?',
-//         name: 'name'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your Github?',
-//         name: 'github'
-//     },
-// ]
+        teamArray.push(engineerObj);
+        createTeam();
+    })
+}
 
-// Intern = [
-//     {
-//         type: 'input',
-//         message: 'What is your name?',
-//         name: 'name'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your ID?',
-//         name: 'ID'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your Email?',
-//         name: 'name'
-//     },
-//     {
-//         type: 'input',
-//         message: 'What is your school?',
-//         name: 'school'
-//     },
-// ]
+function addIntern()
+{
+    inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: 'What is your name?',
+                name: 'name'
+            },
+            {
+                type: 'input',
+                message: 'What is your ID?',
+                name: 'ID'
+            },
+            {
+                type: 'input',
+                message: 'What is your Email?',
+                name: 'name'
+            },
+            {
+                type: 'input',
+                message: 'What is your School?',
+                name: 'school'
+            },
+        ]
+    )
+    .then((answers) => {
+        const internObj = new Intern(
+        
+        answers.name, answers.id, answers.email, answers.school)
+
+        teamArray.push(internObj);
+        createTeam();
+    })
+}
 
 function buildTeam(name, id, email, fieldName, fieldContent)
 { 
-    createManager();
-    // var html = EmployeeHtml.replace('#Name', name);
-    // html = html.replace('#ID', id);
-    // html = html.replaceAll('#Email', email);
-    // html = html.replace('#FieldName', fieldName);
-    // html = html.replace('#FieldContent', fieldContent);
-
-    // return html;
+    //templateGen.generateHTML(teamArray);
+    console.log(teamArray);
+    writeFile('index.html', generateHTML(answers))
 }
 
 // var main = fs.readFileSync('./src/template.html', 'ascii');
@@ -178,7 +169,7 @@ function buildTeam(name, id, email, fieldName, fieldContent)
 //     answers = await inquirer.prompt(Choices);
 //     return answers;
 // }
-employeeMenu();
+//employeeMenu();
 
 // while(true)
 // {
