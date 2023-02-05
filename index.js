@@ -5,10 +5,8 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-const template = require("./src/template.js"); // template.js imports generateHTML function
-const { create } = require('domain');
-
-//maybe create a variable to store text to later throw into the template html
+const templateGen = require("./src/template.js"); // template.js imports generateHTML function
+//const { create } = require('domain'); //whats this?
 
 const teamArray = []; // to store team, gets passed to buildteam() which renders html
 
@@ -47,7 +45,37 @@ function newTeam()
         teamArray.push(managerObj);
         createTeam();
     })
-    // createManager(); //called her for testing //for the start
+
+    function employeeMenu() { // employeeMenu(); is here because every team will have a manager
+        inquirer.prompt(
+            [
+                {
+                    name: "choices",
+                    type: "list",
+                    message: "What would you like to add next:",
+                    choices: ['Engineer', 'Intern','Build to build team.'],
+                },
+            ]
+        )
+        .then((choice)=> {
+    
+            switch(choice.choices) {
+                case "Engineer":
+                    addEngineer();
+    
+                break;
+    
+                case "Intern":
+                    addIntern();
+                
+                break;
+    
+                default:
+            
+                    buildTeam();  
+            }
+        })
+    }
 }
 
 function addEngineer() {
@@ -84,36 +112,6 @@ function addEngineer() {
         teamArray.push(engineerObj);
         employeeMenu();
     })
-
-    function employeeMenu() {
-        inquirer.prompt(
-            [
-                {
-                    name: "choices",
-                    type: "list",
-                    message: "What would you like to add next:",
-                    choices: ['Engineer', 'Intern','Build to build team.'],
-                },
-            ]
-        )
-        .then((choice)=> {
-    
-            switch(choice.choices) {
-                case "Engineer":
-                    addEngineer();
-    
-                break;
-    
-                case "Intern":
-                    addIntern();
-    
-                default:
-            
-                    buildTeam();  
-            }
-        })
-    }
-    
 }
 
 function addIntern() {
@@ -152,11 +150,11 @@ function addIntern() {
     })
 }
 
-function buildTeam(name, id, email, fieldName, fieldContent) { //for creating html page
+function buildTeam(teamArray) { //for creating html page
 
-
-    // const html = templateGen.generateHTML(teamArray); 
-    //templateGen.generateHTML(teamArray);
+    //const templateGen = new templateGen(teamArray); //should templategen contructor takes in teamArray?
+    const templateGen = new templateGen();
+    templateGen.generateHTML(teamArray); //alternative
     console.log(teamArray);
     writeFile('index.html', generateHTML(answers))
 }
