@@ -5,11 +5,14 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-const template = require("./src/template"); // template.js imports generateHTML function
+const template = require("./src/template.js"); // template.js imports generateHTML function
+const { create } = require('domain');
+
+//maybe create a variable to store text to later throw into the template html
 
 const teamArray = []; // to store team, gets passed to buildteam() which renders html
 
-function createManager()
+function newTeam()
 {
     inquirer.prompt(
     
@@ -44,43 +47,11 @@ function createManager()
         teamArray.push(managerObj);
         createTeam();
     })
-    createManager();
-
-    function createTeam()
-    {
-        inquirer.prompt(
-            [
-                {
-                    name: "choices",
-                    type: "list",
-                    message: "What would you like to add next:",
-                    choices: ['Engineer', 'Intern','Build to build team.'],
-                },
-            ]
-        )
-        .then((choice)=>{
-
-            switch(choice.choices)
-            {
-                case "Engineer":
-                    addEngineer();
-
-                break;
-
-                case "Intern":
-                    addIntern();
-
-                default:
-            
-                    buildTeam();
-                
-            }
-        })
-    }
+    // createManager(); //called her for testing //for the start
 }
 
-function addEngineer()
-{
+function addEngineer() {
+
     inquirer.prompt(
         [
             {
@@ -111,12 +82,42 @@ function addEngineer()
         answers.name, answers.id, answers.email, answers.github)
 
         teamArray.push(engineerObj);
-        createTeam();
+        employeeMenu();
     })
+
+    function employeeMenu() {
+        inquirer.prompt(
+            [
+                {
+                    name: "choices",
+                    type: "list",
+                    message: "What would you like to add next:",
+                    choices: ['Engineer', 'Intern','Build to build team.'],
+                },
+            ]
+        )
+        .then((choice)=> {
+    
+            switch(choice.choices) {
+                case "Engineer":
+                    addEngineer();
+    
+                break;
+    
+                case "Intern":
+                    addIntern();
+    
+                default:
+            
+                    buildTeam();  
+            }
+        })
+    }
+    
 }
 
-function addIntern()
-{
+function addIntern() {
+
     inquirer.prompt(
         [
             {
@@ -151,55 +152,13 @@ function addIntern()
     })
 }
 
-function buildTeam(name, id, email, fieldName, fieldContent)
-{ 
+function buildTeam(name, id, email, fieldName, fieldContent) { //for creating html page
+
+
+    // const html = templateGen.generateHTML(teamArray); 
     //templateGen.generateHTML(teamArray);
     console.log(teamArray);
     writeFile('index.html', generateHTML(answers))
 }
 
-// var main = fs.readFileSync('./src/template.html', 'ascii');
-// var EmployeeHtml = fs.readFileSync('./src/Employee.txt', 'ascii');
-
-// var employeeList = '';
-// var inp;
-
-// async function ask()
-// {
-//     answers = await inquirer.prompt(Choices);
-//     return answers;
-// }
-//employeeMenu();
-
-// while(true)
-// {
-    
-//     inp = ask().choices;
-//     console.log(inp);
-
-//     // if (inp == 'Manager') //manager
-//     // {
-//     //     inquirer.prompt(Manager).then((answers) => {});
-//     // }
-//     // else if (inp = 'Engineer') // engineer
-//     // {
-//     //     inquirer.prompt(Engineer).then((answers) => {});
-//     // }
-//     // else if (inp = 'Intern') //intern
-//     // {
-//     //     inquirer.prompt(Intern).then((answers) => {});
-//     // }
-//     // else if (inp = 'Quit')
-//     // {
-//     //     break;
-//     // }
-//     // else 
-//     // {
-//     //     console.log('Please try again');
-//     // }
-// }
-
-// console.log(EmployeeHtml);
-// main = main.replace('#teamList', employeeList);
-
-// fs.writeFileSync('./dist/temporary.html', main);
+newTeam(); //start program
