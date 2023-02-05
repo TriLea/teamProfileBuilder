@@ -5,7 +5,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-const templateGen = require("./src/template.js"); // template.js imports generateHTML function
+const templateGen = require("./src/template"); // template.js imports generateHTML function
 //const { create } = require('domain'); //whats this?
 
 const teamArray = []; // to store team, gets passed to buildteam() which renders html

@@ -3,7 +3,7 @@
 
 var text = firsthalf; //a string to hold the text to be placed in index.html later
 
-function generateHTMLEngineer(teamArray)
+function generateHTML(teamArray)
 {
   teamArray.forEach(element => {
     console.log(element);
@@ -27,9 +27,11 @@ function generateHTMLEngineer(teamArray)
           break
     }
   });
+
+  writeToFile("./dist/index.html", text);
 }
 
-firsthalf = `<!DOCTYPE html>
+var firsthalf = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -43,7 +45,7 @@ firsthalf = `<!DOCTYPE html>
     <!--whole list of employees gets placed here-->
     <section>`; //will be added at beginning
 
-secondhalf = `<section>
+var secondhalf = `<section>
 <!--how do i get the template js to spew html out in here?-->
 #teamList
 </section>
@@ -122,9 +124,4 @@ const generateHTMLIntern = ({ name, ID, email, school }) =>
 </body>
 </html>`;
 
-writeToFile = (fileName, data) => {
-  //update this to write to index.html
-  //with a file path of ./dist/index.html
-}
-
-module.exports = template.js;
+module.exports = template; // why cant i export the template? console says "template is not defined"
