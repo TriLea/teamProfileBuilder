@@ -1,4 +1,4 @@
-const Employee = require("./lib/EmployeeClass");
+const Employee = require("./lib/EmployeeClass"); //is this file path correct, what is ../ vs ./
 
 describe("Employee", () => {
     describe("Initialization", () => {

@@ -11,20 +11,20 @@ function generateHTML(teamArray)
     {
       case "Manager":
         text + generateHTMLManager(element);
-        break;
+      break;
       
       case "Engineer":
         text + generateHTMLEngineer(element);
-        break;
+      break;
 
       case "Intern":    
         text + generateHTMLIntern(element);
-        break;
+      break;
 
       default:
-          console.log("End of list?");
-          text + secondhalf;
-          break
+        console.log("End of list?");
+        text + secondhalf;
+      break
     }
   });
 

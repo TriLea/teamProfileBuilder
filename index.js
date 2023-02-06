@@ -43,7 +43,7 @@ function newTeam()
         answers.managerName, answers.id, answers.email, answers.officerNumber)
 
         teamArray.push(managerObj);
-        createTeam();
+        employeeMenu();
     })
 
     function employeeMenu() { // employeeMenu(); is here because every team will have a manager
@@ -62,17 +62,15 @@ function newTeam()
             switch(choice.choices) {
                 case "Engineer":
                     addEngineer();
-    
                 break;
     
                 case "Intern":
                     addIntern();
-                
                 break;
     
                 default:
-            
-                    buildTeam();  
+                    //if no more employees
+                    buildTeam();
             }
         })
     }
@@ -146,17 +144,17 @@ function addIntern() {
         answers.name, answers.id, answers.email, answers.school)
 
         teamArray.push(internObj);
-        createTeam();
+        employeeMenu();
     })
 }
 
 function buildTeam(teamArray) { //for creating html page
 
     //const templateGen = new templateGen(teamArray); //should templategen contructor takes in teamArray?
-    const templateGen = new templateGen();
-    templateGen.generateHTML(teamArray); //alternative
     console.log(teamArray);
+    const templateGen = new templateGen();
+    templateGen.generateHTML(teamArray);
     writeFile('index.html', generateHTML(answers))
 }
 
-newTeam(); //start program
+newTeam(); //start of program
