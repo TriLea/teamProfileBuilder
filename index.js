@@ -1,11 +1,11 @@
 const inquirer = require('inquirer');
-var fs = require('fs');
+const fs = require('fs');
 
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-const templateGen = require("./src/template"); // template.js imports generateHTML function
+//const templateGen = require("./src/template"); // template.js imports generateHTML function
 //const { create } = require('domain'); //whats this?
 
 const teamArray = []; // to store team, gets passed to buildteam() which renders html
@@ -18,7 +18,7 @@ function newTeam()
             {
                 type: 'input',
                 message: 'What is your name?',
-                name: 'managerName'
+                name: 'name'
             },
             {
                 type: 'input',
@@ -27,8 +27,8 @@ function newTeam()
             },
             {
                 type: 'input',
-                message: 'What is your Email?',
-                name: 'Email'
+                message: 'What is your email?',
+                name: 'email'
             },
             {
                 type: 'input',
@@ -40,40 +40,11 @@ function newTeam()
     .then((answers) => {
         const managerObj = new Manager(
         
-        answers.managerName, answers.id, answers.email, answers.officerNumber)
+        answers.name, answers.ID, answers.email, answers.officeNumber)
 
         teamArray.push(managerObj);
         employeeMenu();
     })
-
-    function employeeMenu() { // employeeMenu(); is here because every team will have a manager
-        inquirer.prompt(
-            [
-                {
-                    name: "choices",
-                    type: "list",
-                    message: "What would you like to add next:",
-                    choices: ['Engineer', 'Intern','Build to build team.'],
-                },
-            ]
-        )
-        .then((choice)=> {
-    
-            switch(choice.choices) {
-                case "Engineer":
-                    addEngineer();
-                break;
-    
-                case "Intern":
-                    addIntern();
-                break;
-    
-                default:
-                    //if no more employees
-                    buildTeam();
-            }
-        })
-    }
 }
 
 function addEngineer() {
@@ -92,8 +63,8 @@ function addEngineer() {
             },
             {
                 type: 'input',
-                message: 'What is your Email?',
-                name: 'name'
+                message: 'What is your email?',
+                name: 'email'
             },
             {
                 type: 'input',
@@ -105,7 +76,7 @@ function addEngineer() {
     .then((answers) => {
         const engineerObj = new Engineer(
         
-        answers.name, answers.id, answers.email, answers.github)
+        answers.name, answers.ID, answers.email, answers.github)
 
         teamArray.push(engineerObj);
         employeeMenu();
@@ -128,7 +99,7 @@ function addIntern() {
             },
             {
                 type: 'input',
-                message: 'What is your Email?',
+                message: 'What is your email?',
                 name: 'name'
             },
             {
@@ -141,20 +112,190 @@ function addIntern() {
     .then((answers) => {
         const internObj = new Intern(
         
-        answers.name, answers.id, answers.email, answers.school)
+        answers.name, answers.ID, answers.email, answers.school)
 
         teamArray.push(internObj);
         employeeMenu();
     })
 }
 
+function employeeMenu() {
+    inquirer.prompt(
+        [
+            {
+                name: "choices",
+                type: "list",
+                message: "What would you like to add next:",
+                choices: ['Engineer', 'Intern','Build to build team.'],
+            },
+        ]
+    )
+    .then((choice)=> {
+
+        switch(choice.choices) {
+            case "Engineer":
+                addEngineer();
+            break;
+
+            case "Intern":
+                addIntern();
+            break;
+
+            case "Build to build team.":
+                buildTeam();
+            break;
+
+            default:
+                console.log("incorrect input");
+        }
+    })
+}
+
 function buildTeam(teamArray) { //for creating html page
 
     //const templateGen = new templateGen(teamArray); //should templategen contructor takes in teamArray?
-    console.log(teamArray);
-    const templateGen = new templateGen();
-    templateGen.generateHTML(teamArray);
-    writeFile('index.html', generateHTML(answers))
+    // console.log(teamArray);
+    // const templateGen = new templateGen();
+    // var textGenerated = templateGen.generateHTML(teamArray);
+    // writeFile('index.html', textGenerated);
+    generateHTML(teamArray);
 }
 
 newTeam(); //start of program
+
+// template generation section, was its own file but the import was no working
+//______________________________________________________________________________________________________________________________________
+
+//generates html template for the buildTeam function
+//how to pass team array to this function?
+
+var text = firsthalf; //a string to hold the text to be placed in index.html later
+
+function generateHTML(array)
+{
+  teamArray.forEach(element => {
+    console.log(element);
+    switch(element.role) 
+    {
+      case "Manager":
+        text + generateHTMLManager(element);
+      break;
+      
+      case "Engineer":
+        text + generateHTMLEngineer(element);
+      break;
+
+      case "Intern":    
+        text + generateHTMLIntern(element);
+      break;
+
+      default:
+        text + secondhalf;
+      break
+    }
+  });
+
+  //fs.mkdir("./dist");
+  fs.writeFile("./dist/index.html", text, (err) => {
+    if (err)
+      console.log(err);
+    else {
+      console.log("File written successfully");
+    }
+  });
+}
+
+var firsthalf = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="./src/stylesheet.css">
+  </head>
+
+  <body>
+    <!--whole list of employees gets placed here-->
+    <section>`; //will be added at beginning
+
+var secondhalf = `<section>
+<!--how do i get the template js to spew html out in here?-->
+#teamList
+</section>
+</body>
+</html>`; // will be added at end
+
+const generateHTMLManager = ({ name, ID, github, linkedin }) =>
+  `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Hi! My name is ${name}</h1>
+    <p class="lead">I am from ${ID}.</p>
+    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+    <ul class="list-group">
+      <li class="list-group-item">My GitHub username is ${github}</li>
+      <li class="list-group-item">LinkedIn: ${linkedin}</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>`;
+
+const generateHTMLEngineer = ({ name, ID, github, linkedin }) =>
+  `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Hi! My name is ${name}</h1>
+    <p class="lead">I am from ${ID}.</p>
+    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+    <ul class="list-group">
+      <li class="list-group-item">My GitHub username is ${github}</li>
+      <li class="list-group-item">LinkedIn: ${linkedin}</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>`;
+
+const generateHTMLIntern = ({ name, ID, email, school }) =>
+  `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Hi! My name is ${name}</h1>
+    <p class="lead">I am from ${ID}.</p>
+    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+    <ul class="list-group">
+      <li class="list-group-item">My GitHub username is ${email}</li>
+      <li class="list-group-item">LinkedIn: ${school}</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>`;
+
+//module.exports = template;
