@@ -42,7 +42,9 @@ function newTeam()
         
         answers.name, answers.ID, answers.email, answers.officeNumber)
 
+        console.log("managerObj");
         teamArray.push(managerObj);
+        console.log(teamArray);
         employeeMenu();
     })
 }
@@ -142,7 +144,7 @@ function employeeMenu() {
             break;
 
             case "Build to build team.":
-                buildTeam();
+                buildTeam(teamArray);
             break;
 
             default:
@@ -151,14 +153,14 @@ function employeeMenu() {
     })
 }
 
-function buildTeam(teamArray) { //for creating html page
+function buildTeam(paramA1) { //for creating html page
 
     //const templateGen = new templateGen(teamArray); //should templategen contructor takes in teamArray?
     // console.log(teamArray);
     // const templateGen = new templateGen();
     // var textGenerated = templateGen.generateHTML(teamArray);
     // writeFile('index.html', textGenerated);
-    generateHTML(teamArray);
+    generateHTML(paramA1);
 }
 
 newTeam(); //start of program
@@ -168,43 +170,6 @@ newTeam(); //start of program
 
 //generates html template for the buildTeam function
 //how to pass team array to this function?
-
-var text = firsthalf; //a string to hold the text to be placed in index.html later
-
-function generateHTML(array)
-{
-  teamArray.forEach(element => {
-    console.log(element);
-    switch(element.role) 
-    {
-      case "Manager":
-        text + generateHTMLManager(element);
-      break;
-      
-      case "Engineer":
-        text + generateHTMLEngineer(element);
-      break;
-
-      case "Intern":    
-        text + generateHTMLIntern(element);
-      break;
-
-      default:
-        text + secondhalf;
-      break
-    }
-  });
-
-  //fs.mkdir("./dist");
-  fs.writeFile("./dist/index.html", text, (err) => {
-    if (err)
-      console.log(err);
-    else {
-      console.log("File written successfully");
-    }
-  });
-}
-
 var firsthalf = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -226,29 +191,60 @@ var secondhalf = `<section>
 </body>
 </html>`; // will be added at end
 
-const generateHTMLManager = ({ name, ID, github, linkedin }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${name}</h1>
-    <p class="lead">I am from ${ID}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${github}</li>
-      <li class="list-group-item">LinkedIn: ${linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+let text = firsthalf; //a string to hold the text to be placed in index.html later
+
+function generateHTML(paramA2)
+{
+  console.log(paramA2);
+  console.log("hit generateHTML");
+  for (var i = 0; i < paramA2.length; i++) 
+  {
+    let element = paramA2[i];
+  
+    console.log(element);
+    console.log(element.getRole());
+    switch(element.getRole()) 
+    {
+      case "Manager":
+        text += generateHTMLManager(element.name, element.id, element.email, element.officeNumber);
+      break;
+      
+      case "Engineer":
+        //text += generateHTMLEngineer(element);
+      break;
+
+      case "Intern":    
+        //text += generateHTMLIntern(element);
+      break;
+
+      default:
+        console.log("incorrect input");
+      break
+    }
+  }
+
+  text += secondhalf;
+  fs.writeFile("./dist/index.html", text, (err) => {
+    if (err) throw err;
+    console.log(err);
+    console.log(text);
+  });
+}
+
+function generateHTMLManager( name, ID, email, officeNumber ) {
+
+  return `
+    <div class="container">
+      <h1 class="display-4">Hi! My name is ${name}</h1>
+      <p class="lead">I am from ${ID}.</p>
+      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <ul class="list-group">
+        <li class="list-group-item">My GitHub username is ${email}</li>
+        <li class="list-group-item">LinkedIn: ${officeNumber}</li>
+      </ul>
+    </div>
+  `;
+}
 
 const generateHTMLEngineer = ({ name, ID, github, linkedin }) =>
   `<!DOCTYPE html>
