@@ -1,4 +1,4 @@
-const Intern = require("./lib/EmployeeClass");
+const Intern = require("../lib/Intern");
 
 describe("Intern", () => {
     describe("Initialization", () => {
@@ -9,10 +9,10 @@ describe("Intern", () => {
         expect(employee.name).toEqual("name");
         expect(employee.school).toEqual("school");
         // getters
-        expect(employee.getName()).toEqual("name")
-        expect(employee.getId()).toEqual(1)
-        expect(employee.getSchool()).toEqual("school")
-        expect(employee.getRole()).toEqual("school")
+        expect(employee.getName()).toEqual("name");
+        expect(employee.getId()).toEqual(1);
+        expect(employee.getSchool()).toEqual("school");
+        expect(employee.getRole()).toEqual("school");
       })
     })
   })

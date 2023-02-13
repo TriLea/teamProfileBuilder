@@ -177,7 +177,7 @@ var firsthalf = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="./src/stylesheet.css">
+    <link rel="stylesheet" href="../src/stylesheet.css">
   </head>
 
   <body>
@@ -210,11 +210,11 @@ function generateHTML(paramA2)
       break;
       
       case "Engineer":
-        //text += generateHTMLEngineer(element);
+        text += generateHTMLEngineer(element.name, element.id, element.github, element.linkedin);
       break;
 
       case "Intern":    
-        //text += generateHTMLIntern(element);
+        text += generateHTMLIntern(element.name, element.id, element.email, element.school);
       break;
 
       default:
@@ -235,12 +235,12 @@ function generateHTMLManager( name, ID, email, officeNumber ) {
 
   return `
     <div class="container">
-      <h1 class="display-4">Hi! My name is ${name}</h1>
-      <p class="lead">I am from ${ID}.</p>
+      <h1 class="display-4">Name: ${name}</h1>
+      <p class="lead">ID: ${ID}.</p>
       <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
       <ul class="list-group">
-        <li class="list-group-item">My GitHub username is ${email}</li>
-        <li class="list-group-item">LinkedIn: ${officeNumber}</li>
+        <li class="list-group-item">Email: ${email}</li>
+        <li class="list-group-item">Office Number: ${officeNumber}</li>
       </ul>
     </div>
   `;
@@ -258,8 +258,8 @@ const generateHTMLEngineer = ({ name, ID, github, linkedin }) =>
 <body>
   <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Hi! My name is ${name}</h1>
-    <p class="lead">I am from ${ID}.</p>
+    <h1 class="display-4">Name: ${name}</h1>
+    <p class="lead">ID: ${ID}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
       <li class="list-group-item">My GitHub username is ${github}</li>
@@ -282,12 +282,12 @@ const generateHTMLIntern = ({ name, ID, email, school }) =>
 <body>
   <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Hi! My name is ${name}</h1>
-    <p class="lead">I am from ${ID}.</p>
+    <h1 class="display-4">Name: ${name}</h1>
+    <p class="lead">ID: ${ID}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${email}</li>
-      <li class="list-group-item">LinkedIn: ${school}</li>
+      <li class="list-group-item">Email: ${email}</li>
+      <li class="list-group-item">School: ${school}</li>
     </ul>
   </div>
 </div>

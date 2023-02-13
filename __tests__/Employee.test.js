@@ -1,4 +1,4 @@
-const Employee = require("./lib/EmployeeClass"); //is this file path correct, what is ../ vs ./
+const Employee = require("../lib/Employee"); //is this file path correct, what is ../ vs ./
 
 describe("Employee", () => {
     describe("Initialization", () => {
@@ -9,10 +9,10 @@ describe("Employee", () => {
         expect(employee.name).toEqual("name");
         expect(employee.email).toEqual("email");
         // getters
-        expect(employee.getName()).toEqual("name")
-        expect(employee.getId()).toEqual(1)
-        expect(employee.getEmail()).toEqual("email")
-        expect(employee.getRole()).toEqual("Employee")
+        expect(employee.getName()).toEqual("name");
+        expect(employee.getId()).toEqual(1);
+        expect(employee.getEmail()).toEqual("email");
+        expect(employee.getRole()).toEqual("Employee");
       })
     })
   })

@@ -1,4 +1,4 @@
-const Manager = require("./lib/EmployeeClass");
+const Manager = require("../lib/Manager");
 
 describe("Manger", () => {
     describe("Initialization", () => {
@@ -9,10 +9,10 @@ describe("Manger", () => {
         expect(employee.name).toEqual("name");
         expect(employee.email).toEqual("email");
         // getters
-        expect(employee.getName()).toEqual("name")
-        expect(employee.getId()).toEqual(1)
-        expect(employee.getManager()).toEqual("email")
-        expect(employee.getRole()).toEqual("Employee")
+        expect(employee.getName()).toEqual("name");
+        expect(employee.getId()).toEqual(1);
+        expect(employee.getManager()).toEqual("email");
+        expect(employee.getRole()).toEqual("Employee");
       })
     })
   })
