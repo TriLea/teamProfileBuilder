@@ -65,20 +65,20 @@ function addEngineer() {
             },
             {
                 type: 'input',
-                message: 'What is your email?',
-                name: 'email'
+                message: 'What is your Github?',
+                name: 'github'
             },
             {
                 type: 'input',
-                message: 'What is your Github?',
-                name: 'github'
+                message: 'What is your LinkedIN?',
+                name: 'LinkedIN'
             },
         ]
     )
     .then((answers) => {
         const engineerObj = new Engineer(
         
-        answers.name, answers.ID, answers.email, answers.github)
+        answers.name, answers.ID, answers.github, answers.LinkedIN)
 
         teamArray.push(engineerObj);
         employeeMenu();
@@ -102,7 +102,7 @@ function addIntern() {
             {
                 type: 'input',
                 message: 'What is your email?',
-                name: 'name'
+                name: 'email'
             },
             {
                 type: 'input',
@@ -182,11 +182,9 @@ var firsthalf = `<!DOCTYPE html>
 
   <body>
     <!--whole list of employees gets placed here-->
-    <section>`; //will be added at beginning
+    <section>`; // will be added at start
 
 var secondhalf = `<section>
-<!--how do i get the template js to spew html out in here?-->
-#teamList
 </section>
 </body>
 </html>`; // will be added at end
@@ -210,7 +208,7 @@ function generateHTML(paramA2)
       break;
       
       case "Engineer":
-        text += generateHTMLEngineer(element.name, element.id, element.github, element.linkedin);
+        text += generateHTMLEngineer(element.name, element.id, element.github, element.LinkedIN);
       break;
 
       case "Intern":    
@@ -235,63 +233,43 @@ function generateHTMLManager( name, ID, email, officeNumber ) {
 
   return `
     <div class="container">
-      <h1 class="display-4">Name: ${name}</h1>
-      <p class="lead">ID: ${ID}.</p>
+      <h1 class="card">Name: ${name}</h1>
+      <p class="title">ID: ${ID}.</p>
       <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-      <ul class="list-group">
-        <li class="list-group-item">Email: ${email}</li>
-        <li class="list-group-item">Office Number: ${officeNumber}</li>
+      <ul class="">
+        <li class=""-item">Email: ${email}</li>
+        <li class=""-item">Office Number: ${officeNumber}</li>
       </ul>
     </div>
   `;
 }
 
-const generateHTMLEngineer = ({ name, ID, github, linkedin }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Name: ${name}</h1>
-    <p class="lead">ID: ${ID}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${github}</li>
-      <li class="list-group-item">LinkedIn: ${linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+function generateHTMLEngineer( name, ID, github, LinkedIN ) {
 
-const generateHTMLIntern = ({ name, ID, email, school }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Name: ${name}</h1>
-    <p class="lead">ID: ${ID}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">Email: ${email}</li>
-      <li class="list-group-item">School: ${school}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+  return `
+    <div class="container">
+      <h1 class="card">Name: ${name}</h1>
+      <p class="title">ID: ${ID}.</p>
+      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <ul class="">
+        <li class=""-item">Github: ${github}</li>
+        <li class="-"item">LinkedIN: ${LinkedIN}</li>
+      </ul>
+    </div>
+  `;
+}
 
-//module.exports = template;
+function generateHTMLIntern( name, ID, email, school ) {
+
+  return `
+    <div class="container">
+      <h1 class="card">Name: ${name}</h1>
+      <p class="title">ID: ${ID}.</p>
+      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <ul class="">
+        <li class=""-item">Email: ${email}</li>
+        <li class=""-item">School: ${school}</li>
+      </ul>
+    </div>
+  `;
+}
