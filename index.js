@@ -64,21 +64,21 @@ function addEngineer() {
                 name: 'ID'
             },
             {
+              type: 'input',
+              message: 'What is your email?',
+              name: 'email'
+          },
+            {
                 type: 'input',
                 message: 'What is your Github?',
                 name: 'github'
-            },
-            {
-                type: 'input',
-                message: 'What is your LinkedIN?',
-                name: 'LinkedIN'
             },
         ]
     )
     .then((answers) => {
         const engineerObj = new Engineer(
         
-        answers.name, answers.ID, answers.github, answers.LinkedIN)
+        answers.name, answers.ID, answers.email, answers.github)
 
         teamArray.push(engineerObj);
         employeeMenu();
@@ -208,7 +208,7 @@ function generateHTML(paramA2)
       break;
       
       case "Engineer":
-        text += generateHTMLEngineer(element.name, element.id, element.github, element.LinkedIN);
+        text += generateHTMLEngineer(element.name, element.id, element.email, element.github);
       break;
 
       case "Intern":    
@@ -233,9 +233,9 @@ function generateHTMLManager( name, ID, email, officeNumber ) {
 
   return `
     <div class="container">
-      <h1 class="card">Name: ${name}</h1>
+      <h1 class="card">manager: ${name}</h1>
       <p class="title">ID: ${ID}.</p>
-      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <h3> <span class="badge badge-secondary">Contact me at:</span></h3>
       <ul class="">
         <li class=""-item">Email: ${email}</li>
         <li class=""-item">Office Number: ${officeNumber}</li>
@@ -244,16 +244,16 @@ function generateHTMLManager( name, ID, email, officeNumber ) {
   `;
 }
 
-function generateHTMLEngineer( name, ID, github, LinkedIN ) {
+function generateHTMLEngineer( name, ID, email, github ) {
 
   return `
     <div class="container">
-      <h1 class="card">Name: ${name}</h1>
+      <h1 class="card">Engineer: ${name}</h1>
       <p class="title">ID: ${ID}.</p>
-      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <h3> <span class="badge badge-secondary">Contact me at:</span></h3>
       <ul class="">
+      <li class="-"item">email: ${email}</li> 
         <li class=""-item">Github: ${github}</li>
-        <li class="-"item">LinkedIN: ${LinkedIN}</li>
       </ul>
     </div>
   `;
@@ -263,9 +263,9 @@ function generateHTMLIntern( name, ID, email, school ) {
 
   return `
     <div class="container">
-      <h1 class="card">Name: ${name}</h1>
+      <h1 class="card">Intern: ${name}</h1>
       <p class="title">ID: ${ID}.</p>
-      <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+      <h3> <span class="badge badge-secondary">Contact me at:</span></h3>
       <ul class="">
         <li class=""-item">Email: ${email}</li>
         <li class=""-item">School: ${school}</li>

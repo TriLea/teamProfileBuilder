@@ -7,3 +7,5 @@ If you wish to run this app you will open the terminal and run 'node index.js' a
 to view the generated html, alt + b to open the browser and open the index.html file in the dist folder.
 
 https://github.com/TriLea/teamProfileBuilder
+
+https://drive.google.com/file/d/1aVTeEnuHGKtChRhd9AGqNcX6qPhlI8Uo/view
